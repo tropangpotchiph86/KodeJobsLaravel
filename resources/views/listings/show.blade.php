@@ -1,6 +1,4 @@
-@extends('layout')
-
-@section('content')
+<x-layout>
 @include('partials._search')
 
 <a
@@ -49,4 +47,4 @@ class="inline-block text-black ml-4 mb-4"
 </div>
 </div>
 
-@endsection
+</x-layout>
