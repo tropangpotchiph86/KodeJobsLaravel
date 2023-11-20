@@ -46,7 +46,7 @@ class="inline-block text-black ml-4 mb-4"
   </div>
 </div>
 
-<x-card class="mt-4 p-2 flex space-x-6">
+{{-- <x-card class="mt-4 p-2 flex space-x-6">
   <a href="/listings/{{$listing->id}}/edit">
     <i class="fa-solid fa-pencil"></i> Edit
   </a>
@@ -57,7 +57,7 @@ class="inline-block text-black ml-4 mb-4"
     <button class="text-red-500"><i class="fa-solid fa-trash"></i>Delete</button>
   </form>
 
-</x-card>
+</x-card> --}}
 
 </div>
 

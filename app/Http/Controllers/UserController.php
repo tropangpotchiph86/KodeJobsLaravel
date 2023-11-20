@@ -8,58 +8,62 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    //Show Register/Create Form
-    public function create() {
-        return view('users.register');
-    }
-
-    //Create New User
+            // Show Register/Create Form
+            public function create() {
+                return view('users.register');
+            }
+    
+            // Create New User
     public function store(Request $request) {
         $formFields = $request->validate([
-            'name' => ['required', 'min:2'],
-            'email' => ['required', 'email', Rule::unique('users','email')],
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => 'required|confirmed|min:6'
         ]);
 
-        //Hash Password
-        $formFields['password']=bcrypt($formFields['password']);
+        // Hash Password
+        $formFields['password'] = bcrypt($formFields['password']);
 
-        //Create User
+        // Create User
         $user = User::create($formFields);
 
+        // Login
         auth()->login($user);
 
         return redirect('/')->with('message', 'User created and logged in');
     }
 
-    //Logout User
-    public function logout (Request $request) {
+       // Logout User
+       public function logout(Request $request) {
         auth()->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return redirect('/')->with('message', 'You have been logged out!');
+
     }
 
-    //SHow Login Form
-    public function login() {
-        return view('users.login');
-    }
+        // Show Login Form
+        public function login() {
+            return view('users.login');
+        }
 
-    //Authenticate User
+            // Authenticate User
     public function authenticate(Request $request) {
         $formFields = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required'
         ]);
 
-        if (auth()->attempt($formFields)) {
+        if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/')->with('message', 'You are now logged in');    
+            return redirect('/')->with('message', 'You are now logged in!');
         }
-     
+
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
+
+    
 }
