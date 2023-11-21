@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -47,5 +48,23 @@ class User extends Authenticatable
     public function listings() {
         return $this->hasMany(Listing::class);
     }
+
+        // Method to check if the user is an admin
+        public function isAdmin()
+        {
+            return $this->role === 'admin';
+        }
+    
+        // Method to check if the user is an HR
+        public function isHR()
+        {
+            return $this->role === 'HR';
+        }
+    
+        // Method to check if the user is a normal user
+        public function isNormalUser()
+        {
+            return $this->role === 'normal';
+        }
 
 }

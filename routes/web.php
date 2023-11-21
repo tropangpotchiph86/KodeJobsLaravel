@@ -35,7 +35,20 @@ Route::middleware('auth')->group(function () {
   Route::get('/listings/{listing}/edit', [ListingController::class, 'edit']);
   Route::put('/listings/{listing}', [ListingController::class, 'update']);
   Route::delete('/listings/{listing}', [ListingController::class, 'destroy']);
-  Route::get('/listings/manage',[ListingController::class, 'manage']);
+  // Manage Listings route (only for HR)
+  Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('check.role:HR');
+   // Manage Users route (only for Admins)
+  //  Route::get('/manage/users', [UserManagementController::class, 'index'])
+  //  ->middleware('check.role:admin')
+  //  ->name('manage.users');
+  Route::get('/manage/users', 'App\Http\Controllers\UserManagementController@index')
+     ->middleware('check.role:admin')
+     ->name('manage.users');
+  // Update user role (only for Admins)
+  // Update user role (only for Admins)
+  Route::patch('/users/{user}/role', 'App\Http\Controllers\UserManagementController@updateRole')
+  ->middleware('check.role:admin')
+  ->name('users.update.role');
   Route::post('/logout', [UserController::class, 'logout']);
 });
 
@@ -49,45 +62,3 @@ Route::middleware('guest')->group(function(){
 
 });
 
-
-
-
-
-
-
-// Original routes
-/* //Show Create Form
-Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
-
-//Store Listing data
-Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
-
-//Show Edit Form
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');
-
-//Update Listing
-Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth');
-
-//Delete Listing
-Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('auth');
-
-//Manage Job Listings
-Route::get('/listings/manage',[ListingController::class, 'manage'])->middleware('auth');
-
-//Single Listing
-Route::get('/listings/{listing}', [ListingController::class, 'show']);
-
-//Show Register/Create Form
-Route::get('/register', [UserController::class, 'create'])->middleware('guest');
-
-//Create New User
-Route::post('/users', [UserController::class, 'store']);
-
-//Log out User
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
-
-//Show login Form
-Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
-
-//Log in User
-Route::post('/users/authenticate', [UserController::class, 'authenticate']); */
