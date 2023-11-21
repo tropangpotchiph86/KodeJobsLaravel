@@ -28,17 +28,21 @@
       </div>
     </div>
 
-
- {{-- Add User Modal Button --}}
-{{--  <button onclick="document.getElementById('addUserModal').classList.remove('hidden')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4">
-  Add User
-</button> --}}
-  
-{{-- With JavaScript Added --}}
-  <button onclick="openAddUserModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4">
+   {{-- Filter and Add User Buttons --}}
+   <div class="flex justify-between mb-4 py-10">
+    <div>
+        <label for="filterRole" class="mr-2">Filter User Role:</label>
+        <select id="filterRole" onchange="filterUsersByRole()" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+            <option value="all">All</option>
+            <option value="admin">Admin</option>
+            <option value="HR">HR</option>
+            <option value="normal">Normal User</option>
+        </select>
+    </div>
+    <button onclick="openAddUserModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4">
       Add User
   </button>
-
+</div>
 
 {{-- Add User Modal --}}
 <div id="addUserModal" class="hidden fixed z-10 inset-0 overflow-y-auto">
@@ -166,6 +170,12 @@
 </x-layout>
 
 <script>
+
+function filterUsersByRole() {
+        const selectedRole = document.getElementById('filterRole').value;
+        window.location.href = `?role=${selectedRole}`;
+    }
+    
   function openAddUserModal() {
       // Reset form fields
       document.getElementById('name').value = '';
