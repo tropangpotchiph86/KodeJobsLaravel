@@ -44,11 +44,14 @@ Route::middleware('auth')->group(function () {
   Route::get('/manage/users', 'App\Http\Controllers\UserManagementController@index')
      ->middleware('check.role:admin')
      ->name('manage.users');
-  // Update user role (only for Admins)
-  // Update user role (only for Admins)
+  // Update user role (only for Admins)  
   Route::patch('/users/{user}/role', 'App\Http\Controllers\UserManagementController@updateRole')
   ->middleware('check.role:admin')
   ->name('users.update.role');
+  //Route for the modal
+  Route::post('/manage/users/create', 'App\Http\Controllers\UserManagementController@createUser')
+     ->middleware('check.role:admin')
+     ->name('manage.users.create');
   Route::post('/logout', [UserController::class, 'logout']);
 });
 
